@@ -2,17 +2,7 @@
 #include "Structs.h"
 using namespace std;
 
-void fixRecord(BYTE* buffer, DWORD recordSize, DWORD sectorSize)
-{
-    RecordHeader* header = (RecordHeader*)buffer;
-    LPWORD update = LPWORD(buffer + header->updateOffset);
 
-    if (LPBYTE(update + header->updateNumber) > buffer + recordSize)
-        throw _T("Update sequence number is invalid");
-
-    for (int i = 1; i < header->updateNumber; i++)
-        *LPWORD(buffer + i * sectorSize - 2) = update[i];
-}
 
 void readRecord(HANDLE h, LONGLONG recordIndex, const vector<Run>& MFTRunList,
     DWORD recordSize, DWORD clusterSize, DWORD sectorSize, BYTE* buffer)
@@ -46,5 +36,4 @@ void readRecord(HANDLE h, LONGLONG recordIndex, const vector<Run>& MFTRunList,
             throw _T("Failed to read file record");
     }
 
-    fixRecord(buffer, recordSize, sectorSize);
 }

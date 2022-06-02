@@ -18,16 +18,16 @@ struct Run;
 struct RecordHeader;
 struct AttributeHeaderR;
 struct AttributeHeaderNR;
-struct FileName;
 struct AttributeRecord;
 struct BootSector;
+struct FileName;
 
 // ErrorMessage.cpp
 void ErrorMessage(DWORD dwCode);
 
 // DriveGeometry.cpp
 BOOL GetDriveGeometry(LPWSTR wszPath, DISK_GEOMETRY* pdg);
-void printgeometry();
+void printgeometry(TCHAR*);
 
 // fseek.cpp
 void seek(HANDLE h, ULONGLONG position);
@@ -36,7 +36,7 @@ void seek(HANDLE h, ULONGLONG position);
 std::vector<Run> parseRunList(BYTE* runList, DWORD runListSize, LONGLONG totalCluster);
 
 // Records.cpp
-void fixRecord(BYTE* buffer, DWORD recordSize, DWORD sectorSize);
-void readRecord(HANDLE h, LONGLONG recordIndex, const std::vector<Run>& MFTRunList, DWORD recordSize, DWORD clusterSize, DWORD sectorSize, BYTE* buffer);
+void readRecord(HANDLE h, LONGLONG recordIndex, const std::vector<Run>& MFTRunList, 
+    DWORD recordSize, DWORD clusterSize, DWORD sectorSize, BYTE* buffer);
 
 

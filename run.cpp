@@ -11,20 +11,9 @@ vector<Run> parseRunList(BYTE* runList, DWORD runListSize, LONGLONG totalCluster
     LPBYTE p = runList;
     while (*p != 0x00)
     {
-        if (p + 1 > runList + runListSize)
-            throw _T("Invalid data run");
-
         int lenLength = *p & 0xf;
         int lenOffset = *p >> 4;
         p++;
-
-        if (p + lenLength + lenOffset > runList + runListSize ||
-            lenLength >= 8 ||
-            lenOffset >= 8)
-            throw _T("Invalid data run");
-
-        if (lenOffset == 0)
-            throw _T("Sparse file is not supported");
 
         ULONGLONG length = 0;
         for (int i = 0; i < lenLength; i++)
@@ -37,9 +26,6 @@ vector<Run> parseRunList(BYTE* runList, DWORD runListSize, LONGLONG totalCluster
             offsetDiff -= 1LL << (lenOffset * 8);
 
         offset += offsetDiff;
-
-        if (offset < 0 || totalCluster <= offset)
-            throw _T("Invalid data run");
 
         result.push_back(Run(offset, length));
     }

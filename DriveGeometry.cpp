@@ -34,8 +34,9 @@ BOOL GetDriveGeometry(LPWSTR wszPath, DISK_GEOMETRY* pdg)
     return (bResult);
 }
 
-void printgeometry() {
-    TCHAR wszDrive[] = _T("\\\\.\\PhysicalDrive0");
+void printgeometry(TCHAR* wszDrive) {
+   // TCHAR wszDrive[] = _T("\\\\.\\PhysicalDrive0");
+    
     DISK_GEOMETRY pdg = { 0 }; // disk drive geometry structure
     BOOL bResult = FALSE;      // generic results flag
     ULONGLONG DiskSize = 0;    // size of the drive, in bytes
